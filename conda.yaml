@@ -1,0 +1,13 @@
+name: wine-env
+channels:
+   - defaults
+dependencies:
+   - python=3.8
+   - pip
+   - scikit-learn
+   - pandas
+   - matplotlib
+   - seaborn
+   - pip:
+        - mlflow
+        - psutil
