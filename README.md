@@ -1,6 +1,6 @@
 # MLflow Tracking with Docker
 
-![MLflow](https://mlflow.org/images/MLflow-logo-final-black.png)
+![MLflow Logo](mlflow-logo.png)
 
 ## Overview
 
