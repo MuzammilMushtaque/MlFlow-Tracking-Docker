@@ -1,27 +1,23 @@
-FROM continuumio/miniconda3
+# Use the official Python base image
+FROM python:3.9-slim
 
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy project files into the container
-COPY . /app
+# Update the package list
+RUN apt-get update
 
-# Install dependencies
-RUN conda env create -f conda.yaml
+# Install Git and other dependencies
+RUN apt-get install -y git --fix-missing
 
-# Activate the environment
-RUN echo "source activate wine-env" > ~/.bashrc
-ENV PATH /opt/conda/envs/wine-env/bin:$PATH
+# Copy the requirements file into the container
+COPY requirements.txt .
 
-# Install MLflow
-RUN pip install mlflow
+# Install the required packages
+RUN pip install --no-cache-dir -r requirements.txt
 
-pip install -r requirements.txt
+# Copy the rest of the application code into the container
+COPY MLFlow_2.py .
 
-# Expose port for MLflow UI
-EXPOSE 5000
-
-# Command to run the project
-# CMD mlflow run . -P n_estimators=100 -P max_depth=3
-
-# Command to run the project (new)
-CMD ["bash", "-c", "mlflow run ."]
+# Run the Python script and then start MLflow UI
+CMD python MLFlow_2.py && mlflow ui --host 0.0.0.0
